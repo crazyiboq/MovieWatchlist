@@ -1,0 +1,87 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}Movie Watchlist{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+
+<body>
+
+<header class="navbar">
+
+    <div class="navbar-left">
+        <a href="{% url 'home' %}" class="logo">
+            MOVIE<span>WATCHLIST</span>
+        </a>
+    </div>
+
+{% if user.is_authenticated %}
+
+    <nav class="navbar-right">
+
+        <span class="welcome">
+            Welcome, <strong>{{ user.username }}</strong>
+        </span>
+
+        <a href="{% url 'movie_list' %}" class="nav-link">
+            My Movies
+        </a>
+
+        <form action="{% url 'logout' %}" method="post">
+            {% csrf_token %}
+
+            <button type="submit" class="logout-btn">
+                Logout
+            </button>
+        </form>
+
+    </nav>
+
+{% else %}
+
+    <nav class="navbar-right">
+
+        {% if request.resolver_match.url_name == "login" %}
+
+            <a href="{% url 'register' %}" class="primary-btn">
+                Register
+            </a>
+
+        {% elif request.resolver_match.url_name == "register" %}
+
+            <a href="{% url 'login' %}" class="primary-btn">
+                Login
+            </a>
+
+        {% else %}
+
+            <a href="{% url 'login' %}" class="nav-link">
+                Login
+            </a>
+
+            <a href="{% url 'register' %}" class="primary-btn">
+                Register
+            </a>
+
+        {% endif %}
+
+    </nav>
+
+{% endif %}
+</header>
+
+<main class="page-container">
+    {% block content %}
+    {% endblock %}
+</main>
+```
+
+</body>
+</html>

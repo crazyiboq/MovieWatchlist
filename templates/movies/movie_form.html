@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block title %}Movie | Movie Watchlist{% endblock %}
+
+{% block content %}
+
+<div class="form-page">
+
+<div class="form-header">
+    <p class="eyebrow">MOVIE WATCHLIST</p>
+    <h1>Add / Edit Movie</h1>
+    <p>
+        Add a movie to your personal collection.
+    </p>
+</div>
+
+<div class="form-card">
+
+    <form method="POST">
+
+        {% csrf_token %}
+
+        {{ form.as_p }}
+
+        <div class="form-actions">
+
+            <button type="submit" class="primary-btn">
+                Save Movie
+            </button>
+
+            <a href="{% url 'movie_list' %}" class="secondary-btn">
+                Cancel
+            </a>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+</div>
+
+{% endblock %}

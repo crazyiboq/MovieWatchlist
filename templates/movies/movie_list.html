@@ -1,0 +1,131 @@
+{% extends "base.html" %}
+
+{% block title %}My Movies | Movie Watchlist{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <p class="eyebrow">YOUR COLLECTION</p>
+
+        <h1>My Movies</h1>
+
+        <p class="page-subtitle">
+            Keep track of everything you want to watch.
+        </p>
+    </div>
+
+    <a href="{% url 'movie_create' %}" class="primary-btn">
+        + Add Movie
+    </a>
+
+</div>
+
+
+{% if movies %}
+
+    <div class="movie-grid">
+
+        {% for movie in movies %}
+
+            <article class="movie-card">
+
+                <div class="movie-card-top">
+
+                    <span class="movie-badge {{ movie.status }}">
+                        {{ movie.get_status_display }}
+                    </span>
+
+                    {% if movie.rating %}
+
+                        <span class="rating">
+                            ★ {{ movie.rating }}/10
+                        </span>
+
+                    {% else %}
+
+                        <span class="rating unrated">
+                            Not rated
+                        </span>
+
+                    {% endif %}
+
+                </div>
+
+
+                <div class="movie-card-content">
+
+                    <h2>
+                        {{ movie.title }}
+                    </h2>
+
+                    <p class="movie-genre">
+                        {{ movie.genre }}
+                    </p>
+
+                    <div class="movie-info">
+                        <span>
+                            {{ movie.release_year }}
+                        </span>
+
+                        <span>•</span>
+
+                        <span>
+                            Added {{ movie.created_at|date:"M d, Y" }}
+                        </span>
+                    </div>
+
+                </div>
+
+
+                <div class="movie-actions">
+
+                    <a
+                        href="{% url 'movie_update' movie.pk %}"
+                        class="edit-btn"
+                    >
+                        Edit
+                    </a>
+
+                    <a
+                        href="{% url 'movie_delete' movie.pk %}"
+                        class="delete-btn"
+                    >
+                        Delete
+                    </a>
+
+                </div>
+
+            </article>
+
+        {% endfor %}
+
+    </div>
+
+{% else %}
+
+    <div class="empty-state">
+
+        <div class="empty-icon">
+            🎬
+        </div>
+
+        <h2>Your watchlist is empty</h2>
+
+        <p>
+            Start building your movie collection.
+        </p>
+
+        <a
+            href="{% url 'movie_create' %}"
+            class="primary-btn"
+        >
+            Add Your First Movie
+        </a>
+
+    </div>
+
+{% endif %}
+
+{% endblock %}

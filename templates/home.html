@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Watchlist{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-content">
+
+        <p class="eyebrow">YOUR PERSONAL CINEMA</p>
+
+        <h1>
+            Your movies.<br>
+            Your watchlist.
+        </h1>
+
+        <p class="hero-text">
+            Keep track of the movies you want to watch,
+            the ones you're currently watching,
+            and everything you've already seen.
+        </p>
+
+        <div class="hero-actions">
+
+            {% if user.is_authenticated %}
+
+                <a href="{% url 'movie_list' %}" class="primary-btn">
+                    My Movies
+                </a>
+
+            {% else %}
+
+                <a href="{% url 'login' %}" class="primary-btn">
+                    Sign In
+                </a>
+
+                <a href="{% url 'register' %}" class="secondary-btn">
+                    Create Account
+                </a>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}
